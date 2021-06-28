@@ -8,8 +8,8 @@ CS639 Team 1's Project 2021
 "Calorie Counter- MyFitnessPal" is a calorie counter/weight loss app associated with the fitness website myfitnesspal.com. Use of the application requires a membership to the website. The application tracks your fitness goals and recommends a certain caloric count to reach those goals. You can look up what food items you consume every day, and this is added to your total calorie count. The app will also try to direct you to other resources under the MyFitnessPal platform. Calorie Counter by Lose It! Is a weight loss/calorie counter application under Loseit inc. Much like the previous application use of the app requires registering under the website www.loseit.com. Like MyFitnessPal calorie counter, the app sets a caloric goal for each day to assist with meeting a weight loss goal. The app also tries to direct you to other resources under the Lose it! umbrella.   
 
 Calorie Counter by Lose It! ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_2021-06-28-00-55-57.png?raw=true)
-Calorie Counter by Lose It!: ![](https://github.com/SeanAres/CS639Team1Project2021/blob/johnBrilhart/Screenshot_2021-06-28-00-57-29.png?raw=true) 
-Calorie Counter- MyFitnessPal: ![](https://github.com/SeanAres/CS639Team1Project2021/blob/johnBrilhart/Screenshot_2021-06-28-01-29-34.png?raw=true)
+Calorie Counter by Lose It!: ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_2021-06-28-00-57-29.png?raw=true) 
+Calorie Counter- MyFitnessPal: ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_2021-06-28-01-29-34.png?raw=true)
 5. We will be using the ESHA Research Nutrition API portal. This API will give us information about each food item's nutritional information with a straightforward JSON format. Link: https://nutrition-api-dev.esha.com/  
    We will also be using the Firebase database to collect and store information for the user such that the user can view their app on multiple devices at their convenience.  
    Finally, we are planning to use a cache to store information locally on a phone such that we don't have to access the nutrition API too often.
