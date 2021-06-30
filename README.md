@@ -10,7 +10,7 @@ CS639 Team 1's Project 2021
    "Cronometer - Nutrition Tracker is a similar app to the two above, you must register to their site by using an email, and enter your current statistics such as height and weight, and your goals(whether to gain or lose weight). After these have been entered, the app makes a plan customized to your needs, detailing macros and kcal left for the day. You are able to look up food on a different tab, and the app automatically adds it to the main tab along with its basic nutritional information.
  ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_2021-06-28-00-57-29.png?raw=true) 
  ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_2021-06-28-01-29-34.png?raw=true)
- ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_1624925843.png?raw=true)
+ ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_20210629-220915.png?raw=true)
 
 5. We will be using the ESHA Research Nutrition API portal. This API will give us information about each food item's nutritional information with a straightforward JSON format. Link: https://nutrition-api-dev.esha.com/  
    We will also be using the Firebase database to collect and store information for the user such that the user can view their app on multiple devices at their convenience.  
