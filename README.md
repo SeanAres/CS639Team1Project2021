@@ -1,3 +1,4 @@
+
 # CS639Team1Project2021
 CS639 Team 1's Project 2021
 
@@ -16,3 +17,5 @@ CS639 Team 1's Project 2021
    We will also be using the Firebase database to collect and store information for the user such that the user can view their app on multiple devices at their convenience.  
    Finally, we are planning to use a cache to store information locally on a phone such that we don't have to access the nutrition API too often.
 
+Below is a design of our application mapping out the different activities:
+![Design](https://user-images.githubusercontent.com/60992141/124345816-20223200-dba9-11eb-9761-20f6ce0e1c53.jpg)
