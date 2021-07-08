@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">HealthyShopper</string>
+    <string name="pantry_label">Pantry</string>
+    <string name="shopping_List_label">Shopping List</string>
+    <string name="settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
