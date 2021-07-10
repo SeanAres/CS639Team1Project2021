@@ -11,5 +11,13 @@
     <string name="loading">Loading....</string>
     <string name="no_search_term">No Search Term Entered!</string>
     <string name="no_network">No Network, check connection!</string>
+    <string-array name="food_array">
+        <item>Food 1</item>
+        <item>Food 2</item>
+    </string-array>
+    <string-array name="food_description">
+        <item>Description 1</item>
+        <item>Description 2</item>
+    </string-array>
 
 </resources>
