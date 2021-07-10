@@ -98,12 +98,32 @@ public class pantry extends Fragment {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = null;
+                if (connMgr != null) {
+                    networkInfo = connMgr.getActiveNetworkInfo();
+                }
+
+
+                if (networkInfo != null && networkInfo.isConnected()
+                        && queryString.length() != 0) {
+                    new FetchNutrients(mNutrientsText).execute(queryString);
+                    mNutrientsText.setText(R.string.loading);
+                    Log.i(TAG, queryString);
+                }
+                else {
+                    if (queryString.length() == 0) {
+
+                        mNutrientsText.setText(R.string.no_search_term);
+                    } else {
+
+                        mNutrientsText.setText(R.string.no_network);
+                    }
+                }
 
 
 
-                Log.i(TAG, queryString);
-                new FetchNutrients(mNutrientsText).execute(queryString);
-                mNutrientsText.setText(R.string.loading);
 
             }
         });
