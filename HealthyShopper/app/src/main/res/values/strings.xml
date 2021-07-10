@@ -3,4 +3,10 @@
     <string name="pantry_label">Pantry</string>
     <string name="shopping_List_label">Shopping List</string>
     <string name="settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pantry_edit_text">Enter food item for pantry!</string>
+    <string name="calculate_btn">Calculate</string>
+    <string name="food_value_text">Nutritional value</string>
+
 </resources>
