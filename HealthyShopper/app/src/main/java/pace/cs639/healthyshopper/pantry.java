@@ -2,11 +2,19 @@ package pace.cs639.healthyshopper;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +27,9 @@ public class pantry extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private TextInputEditText nutrientsEditText;
+    private TextView mNutrientsText;
+    private MaterialButton calculateButton;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -56,9 +67,27 @@ public class pantry extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pantry, container, false);
+        View view = inflater.inflate(R.layout.fragment_pantry, container, false);
+        mNutrientsText = (TextView)view.findViewById(R.id.nutrientText);
+        nutrientsEditText = (TextInputEditText)view.findViewById(R.id.nutrients);
+        final String TAG = "Pantry";
+        calculateButton = view.findViewById(R.id.calculate_btn);
+
+        // Set an error if the password is less than 8 characters.
+        calculateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Button Clicked");
+                String queryString = nutrientsEditText.getText().toString();
+                Log.i(TAG, queryString);
+                new FetchNutrients(mNutrientsText).execute(queryString);
+            }
+        });
+
+
+        return view;
     }
 }

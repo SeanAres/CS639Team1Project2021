@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".pantry">
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:paddingTop="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/nutrientText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/pantry_label" />
+        android:layout_height="wrap_content"
+        android:text="@string/food_value_text" />
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:hint="@string/pantry_edit_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id = "@+id/nutrients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/calculate_btn"
+        android:layout_width="wrap_content"
+
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="@string/calculate_btn" />
+
+
+</LinearLayout>
