@@ -15,9 +15,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -36,6 +41,10 @@ public class pantry extends Fragment {
     private TextInputEditText nutrientsEditText;
     private TextView mNutrientsText;
     private MaterialButton calculateButton;
+    private String s1[], s2[];
+    private ArrayList<Integer> images= new ArrayList<Integer>();
+    private RecyclerView recyclerView;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,7 +90,13 @@ public class pantry extends Fragment {
         nutrientsEditText = (TextInputEditText)view.findViewById(R.id.nutrients);
         final String TAG = "Pantry";
         calculateButton = view.findViewById(R.id.calculate_btn);
-
+        images.add(R.drawable.ic_baseline_fastfood_24);
+        images.add(R.drawable.ic_baseline_emoji_food_beverage_24);
+        s1 =getResources().getStringArray(R.array.food_array);
+        s2 = getResources().getStringArray(R.array.food_description);
+        List<String> s1List = Arrays.asList(s1);
+        List<String> s2List = Arrays.asList(s2);
+        recyclerView = view.findViewById(R.id.recyclerView);
         // Set an error if the password is less than 8 characters.
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
