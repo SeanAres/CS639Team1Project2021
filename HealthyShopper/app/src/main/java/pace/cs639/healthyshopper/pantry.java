@@ -1,20 +1,26 @@
 package pace.cs639.healthyshopper;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+
+import static androidx.core.content.ContextCompat.getSystemService;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,8 +88,23 @@ public class pantry extends Fragment {
             public void onClick(View view) {
                 Log.i(TAG, "Button Clicked");
                 String queryString = nutrientsEditText.getText().toString();
+                try{
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    if (imm != null ) {
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+
+
                 Log.i(TAG, queryString);
                 new FetchNutrients(mNutrientsText).execute(queryString);
+                mNutrientsText.setText(R.string.loading);
+
             }
         });
 

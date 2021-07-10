@@ -8,5 +8,6 @@
     <string name="pantry_edit_text">Enter food item for pantry!</string>
     <string name="calculate_btn">Calculate</string>
     <string name="food_value_text">Nutritional value</string>
+    <string name="loading">Loading....</string>
 
 </resources>
