@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,23 +33,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         button_register = findViewById(R.id.button_register);
         loginClick = findViewById(R.id.loginClick);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
 
         mAuth = FirebaseAuth.getInstance();
 
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextEmail = findViewById(R.id.editTextEmail);
-                editTextPassword = findViewById(R.id.editTextPassword);
-                String email = editTextEmail.toString();
-                String password = editTextPassword.toString();
-
-                if(email.isEmpty()||password.isEmpty()){
-                    Toast.makeText(RegisterActivity.this, "please enter an email and password.",
-                            Toast.LENGTH_SHORT).show();
-                }else{
-                    createAccount(email, password);
-                }
+                    createAccount();
             }
         });
 
@@ -60,26 +53,39 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void createAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+    private void createAccount() {
+        String email = editTextEmail.toString();
+        String password = editTextPassword.toString();
+
+        if(TextUtils.isEmpty(email)){
+            editTextEmail.setError("Enter your email");
+            return;
+        }
+        else if(TextUtils.isEmpty(password)){
+            editTextPassword.setError("Enter your email");
+            return;
+        }
+        else if(password.length()<4){
+            editTextPassword.setError("Password must be more than 4 characters");
+        }
+        else{
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                finish();
+                            } else {
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-        // [END create_user_with_email]
+                    });
+        }
     }
 
     private void updateUI(FirebaseUser user) {
