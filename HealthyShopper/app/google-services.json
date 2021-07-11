@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "574234664508",
-    "project_id": "healthyshopper-43272",
-    "storage_bucket": "healthyshopper-43272.appspot.com"
+    "project_number": "416850880072",
+    "project_id": "cs639team1project2021-d5abf",
+    "storage_bucket": "cs639team1project2021-d5abf.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:574234664508:android:b3505419e16023fedc2d39",
+        "mobilesdk_app_id": "1:416850880072:android:dc4585f21e99ba2bb2da7d",
         "android_client_info": {
           "package_name": "pace.cs639.healthyshopper"
         }
       },
       "oauth_client": [
         {
-          "client_id": "574234664508-8kokvpeu8aajgg52601nm7e2f7jt9i5b.apps.googleusercontent.com",
+          "client_id": "416850880072-conddkfcgprdgnv6akh0u7ohovv570tp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pace.cs639.healthyshopper",
+            "certificate_hash": "8f7c04443d2fd0092f7bb46ea1c2bc9743c5d2f8"
+          }
+        },
+        {
+          "client_id": "416850880072-6f68imucibq6kdgc32rfotktfpkqvsod.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyApqZuwvypTsr0iESR6i14ZLgrH9k4iR7Y"
+          "current_key": "AIzaSyCHxU4hDfdF7JntpfS8QtpH7f-JC7GDo4k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "574234664508-8kokvpeu8aajgg52601nm7e2f7jt9i5b.apps.googleusercontent.com",
+              "client_id": "416850880072-6f68imucibq6kdgc32rfotktfpkqvsod.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

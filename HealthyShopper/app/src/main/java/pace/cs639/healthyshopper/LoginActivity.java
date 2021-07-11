@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.view.View.OnClickListener;
 
-import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -54,29 +56,30 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
     }
 
     private void signIn() {
-        String email = editTextEmail.toString();
-        String password = editTextPassword.toString();
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
 
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("Enter your email");
             return;
         }
         else if(TextUtils.isEmpty(password)){
-            editTextPassword.setError("Enter your email");
+            editTextPassword.setError("Enter your password");
             return;
         }
         else{
             mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                //updateUI(user);
+                                //updateUI(user)
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             } else {
@@ -89,29 +92,25 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         }
-
     }
 
-    private void updateUI(FirebaseUser user) {
-        if(user.equals(null)){
-            editTextEmail.setText("");
-            editTextPassword.setText("");
-        }
-        else {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        }
-    }
+//    private void updateUI(FirebaseUser user) {
+//        if(user.equals(null)){
+//            editTextEmail.setText("");
+//            editTextPassword.setText("");
+//        }
+//        else {
+//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//        }
+//    }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             //reload();
         }
     }
-
-
 
 }
