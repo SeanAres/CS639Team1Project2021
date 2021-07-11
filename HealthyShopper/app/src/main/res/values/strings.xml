@@ -11,6 +11,11 @@
     <string name="loading">Loading....</string>
     <string name="no_search_term">No Search Term Entered!</string>
     <string name="no_network">No Network, check connection!</string>
+    <string name="minus_string">-</string>
+    <string name="plus_string">+</string>
+    <string name="label_txt">Apple</string>
+    <string name="pantry_count">0/5</string>
+    <string name="food_txt">Cal: 5, Prt: 5, Fat: 5, Carb: 5</string>
     <string-array name="food_array">
         <item>Food 1</item>
         <item>Food 2</item>
