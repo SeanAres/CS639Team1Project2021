@@ -47,7 +47,12 @@ public class LoginActivity extends AppCompatActivity {
                 String email = editTextEmail.toString();
                 String password = editTextPassword.toString();
 
-                signIn(email, password);
+                if(email.isEmpty()||password.isEmpty()){
+                    Toast.makeText(LoginActivity.this, "please enter an email and password.",
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    signIn(email, password);
+                }
             }
         });
 

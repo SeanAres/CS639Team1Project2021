@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     private EditText editTextEmail, editTextPassword;
-    private TextView registerClick;
+    private TextView loginClick;
     private Button button_register;
     private FirebaseAuth mAuth;
 
@@ -31,9 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         button_register = findViewById(R.id.button_register);
-        registerClick = findViewById(R.id.registerClick);
+        loginClick = findViewById(R.id.loginClick);
 
         mAuth = FirebaseAuth.getInstance();
+
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,11 +42,17 @@ public class RegisterActivity extends AppCompatActivity {
                 editTextPassword = findViewById(R.id.editTextPassword);
                 String email = editTextEmail.toString();
                 String password = editTextPassword.toString();
-                createAccount(email, password);
+
+                if(email.isEmpty()||password.isEmpty()){
+                    Toast.makeText(RegisterActivity.this, "please enter an email and password.",
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    createAccount(email, password);
+                }
             }
         });
 
-        registerClick.setOnClickListener(new View.OnClickListener() {
+        loginClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
