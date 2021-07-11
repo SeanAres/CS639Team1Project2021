@@ -87,7 +87,7 @@
                     android:id="@+id/SL_AddtoPantryBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Add to Pantry"
+                    android:text="@string/add_to_pantry_btntxt"
                     android:backgroundTint="@color/primaryDarkColor"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
