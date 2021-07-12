@@ -33,6 +33,7 @@ public class shopping_list extends Fragment {
     private TextInputEditText foodNameInput;
     private TextInputEditText qtyInput;
     private Button addBtn;
+    private Button delBtn;
 
 
     public shopping_list() {
@@ -52,8 +53,8 @@ public class shopping_list extends Fragment {
         super.onCreate(savedInstanceState);
         foodList = new ArrayList<>();
         //default test food items
-        foodList.add(new SL_FoodItem("Apple", 2));
-        foodList.add(new SL_FoodItem("Banana", 3));
+        //foodList.add(new SL_FoodItem("Apple", 2));
+        //foodList.add(new SL_FoodItem("Banana", 3));
     }
 
     private void setAdapter(AddFoodItemAdapter adapter) {
@@ -73,6 +74,7 @@ public class shopping_list extends Fragment {
         setAdapter(adapter);
         foodNameInput = (TextInputEditText) view.findViewById(R.id.SL_FoodInput);
         qtyInput = (TextInputEditText) view.findViewById(R.id.SL_QtyInput);
+        delBtn = (Button) view.findViewById(R.id.SL_DeleteBtn);
         addBtn = (Button) view.findViewById(R.id.SL_AddItemBtn);
         addBtn.setOnClickListener(new View.OnClickListener()
         {
@@ -108,6 +110,7 @@ public class shopping_list extends Fragment {
                 }
             }
         });
+
         return view;
     }
 }
