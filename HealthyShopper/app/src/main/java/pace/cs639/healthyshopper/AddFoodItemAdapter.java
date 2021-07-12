@@ -3,6 +3,7 @@ package pace.cs639.healthyshopper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,15 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
         holder.nameView.setText(name);
         String qty = String.valueOf(foodList.get(position).getQty());
         holder.qtyView.setText("x"+qty);
+        //OnClickListener implemented here in order to delete appropriate card when its delete button is pressed.
+        holder.delBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                foodList.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+                notifyItemRangeChanged(holder.getAdapterPosition(), foodList.size());
+            }
+        });
     }
 
     @Override
@@ -43,11 +53,13 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
 
     public class ShoppingItemViewHolder extends RecyclerView.ViewHolder{
         private TextView nameView, qtyView;
+        private Button delBtn;
 
         public ShoppingItemViewHolder(@NonNull @org.jetbrains.annotations.NotNull View itemView) {
             super(itemView);
             nameView = itemView.findViewById(R.id.SL_FoodNameView);
             qtyView = itemView.findViewById(R.id.SL_QtyView);
+            delBtn = itemView.findViewById(R.id.SL_DeleteBtn);
         }
     }
 }
