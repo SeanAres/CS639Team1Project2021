@@ -3,21 +3,23 @@ package pace.cs639.healthyshopper;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+
+
 
 import com.google.android.material.textfield.TextInputEditText;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+
+
 
 public class FetchNutrients extends AsyncTask<String, Void, String> {
     private WeakReference<TextView> mNutrientTextView;
+
 
 
 
@@ -36,6 +38,10 @@ public class FetchNutrients extends AsyncTask<String, Void, String> {
             JSONObject food = foodArray.getJSONObject(0);
             nutrients = food.getString(  "lowercaseDescription") + "\n";
             JSONArray nutrientsArray = food.getJSONArray("foodNutrients");
+
+ 
+
+
             JSONObject nutrient = nutrientsArray.getJSONObject(0);
                 try {
                     nutrients = nutrients + "Protein" + ": " + nutrient.getString("value") + ", ";
@@ -53,6 +59,7 @@ public class FetchNutrients extends AsyncTask<String, Void, String> {
 
             if (nutrients != null) {
                 mNutrientTextView.get().setText(nutrients);
+
 
 
             }

@@ -18,13 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -50,6 +49,7 @@ public class pantry extends Fragment {
     private static ArrayList<Pantry_Item> pantryList;
     private TextInputEditText maxInput;
     private TextInputEditText totalInput;
+
 
 
     // TODO: Rename and change types of parameters
@@ -101,6 +101,11 @@ public class pantry extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pantry, container, false);
         mNutrientsText = (TextView)view.findViewById(R.id.nutrientText);
         nutrientsEditText = (TextInputEditText)view.findViewById(R.id.nutrients);
+
+       
+
+        // Set an error if the password is less than 8 characters.
+
         totalEditText = (TextInputEditText)view.findViewById(R.id.totalEditText);
         maxEditText = (TextInputEditText)view.findViewById(R.id.maxEditText);
         final String TAG = "Pantry";
@@ -110,6 +115,7 @@ public class pantry extends Fragment {
         pantryRecyclerView =  (RecyclerView)view.findViewById(R.id.pantryRecyclerView);
         PantryAdapter adapter = new PantryAdapter(pantryList);
         setAdapter(adapter);
+
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,6 +177,7 @@ public class pantry extends Fragment {
                 }
             }
         });
+
 
         return view;
     }

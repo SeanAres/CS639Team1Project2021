@@ -8,6 +8,7 @@
     android:padding="24dp"
     android:paddingTop="16dp">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id = "@+id/pantryRecyclerView"
         android:layout_width="match_parent"
@@ -73,6 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Item to Pantry" />
+
 
 
 </LinearLayout>
