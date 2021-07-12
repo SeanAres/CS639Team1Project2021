@@ -35,6 +35,8 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
         holder.nameView.setText(name);
         String qty = String.valueOf(foodList.get(position).getQty());
         holder.qtyView.setText("x"+qty);
+        String cal = foodList.get(position).getCal();
+        holder.calView.setText(cal);
         //OnClickListener implemented here in order to delete appropriate card when its delete button is pressed.
         holder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +54,14 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
     }
 
     public class ShoppingItemViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameView, qtyView;
+        private TextView nameView, qtyView, calView;
         private Button delBtn;
 
         public ShoppingItemViewHolder(@NonNull @org.jetbrains.annotations.NotNull View itemView) {
             super(itemView);
             nameView = itemView.findViewById(R.id.SL_FoodNameView);
             qtyView = itemView.findViewById(R.id.SL_QtyView);
+            calView = itemView.findViewById(R.id.SL_CalView);
             delBtn = itemView.findViewById(R.id.SL_DeleteBtn);
         }
     }

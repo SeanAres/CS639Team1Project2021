@@ -21,6 +21,10 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -37,8 +41,7 @@ public class shopping_list extends Fragment {
     private TextInputEditText foodNameInput;
     private TextInputEditText qtyInput;
     private TextView infoView;
-    private TextView instructionsView;
-    private Button addBtn;
+    private TextView calView;
 
 
     public shopping_list() {
@@ -78,11 +81,12 @@ public class shopping_list extends Fragment {
         AddFoodItemAdapter adapter = new AddFoodItemAdapter(foodList);
         setAdapter(adapter);
         infoView = (TextView) view.findViewById(R.id.SL_infoView);
-        instructionsView = (TextView) view.findViewById(R.id.SL_instructions);
+        calView = (TextView) view.findViewById(R.id.SL_CalView);
         foodNameInput = (TextInputEditText) view.findViewById(R.id.SL_FoodInput);
         qtyInput = (TextInputEditText) view.findViewById(R.id.SL_QtyInput);
 
-        addBtn = (Button) view.findViewById(R.id.SL_AddItemBtn);
+
+        Button addBtn = (Button) view.findViewById(R.id.SL_AddItemBtn);
         addBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -97,6 +101,8 @@ public class shopping_list extends Fragment {
 
                 String fName = foodNameInput.getText().toString().trim();
                 String results = "nothing";
+                String calories = "000cal";
+                infoView.setText(R.string.loading);
                 infoView.setVisibility(View.VISIBLE);
 
                 //Query the food item to make sure they typed something edible.
@@ -135,10 +141,22 @@ public class shopping_list extends Fragment {
                     //do nothing, value was not found in the database
                 }
                 else {
-                    Log.d("RESULT_VALUE", results);
                     //reset the loading screen since value was valid, proceed as normal
-                    infoView.setText(R.string.defaultInfo);
+                    infoView.setText(R.string.Default);
                     infoView.setVisibility(View.GONE);
+                    //get the calories we need from the object
+                    try {
+                        JSONObject jsonObject = new JSONObject(results);
+                        JSONArray foodArray = jsonObject.getJSONArray("foods");
+                        JSONObject food = foodArray.getJSONObject(0);
+                        JSONArray nutrientsArray = food.getJSONArray("foodNutrients");
+                        jsonObject = nutrientsArray.getJSONObject(3);
+                        calories = jsonObject.getString("value") + "cal/each";
+                        Log.d("CALAMOUNT:", calories);
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }
+                    Log.d("RESULT_VALUE", results);
                     String qty = qtyInput.getText().toString().trim();
                     if (fName.length() != 0 && qty.length() != 0) {
                         int found = 0;
@@ -151,7 +169,7 @@ public class shopping_list extends Fragment {
                         if (found == 1) {
                             Toast.makeText(getContext(), "Food already in list!", Toast.LENGTH_SHORT).show();
                         } else {
-                            foodList.add(new SL_FoodItem(fName, Integer.parseInt(qty)));
+                            foodList.add(new SL_FoodItem(fName, Integer.parseInt(qty), calories));
                             adapter.notifyItemInserted(foodList.size() - 1);
                             Toast.makeText(getContext(), "Shopping list updated!", Toast.LENGTH_SHORT).show();
 

@@ -14,9 +14,13 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class settings extends Fragment {
 
     private TextView signOutClick;
+    private FirebaseAuth mAuth;
+    private TextView userInfo;
 
     public settings() {
         // Required empty public constructor
@@ -32,6 +36,8 @@ public class settings extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //get user's email to display in settings
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -40,6 +46,10 @@ public class settings extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         signOutClick = (TextView)view.findViewById(R.id.signOutClick);
+        //display currently logged in email
+        userInfo = (TextView) view.findViewById(R.id.STT_account_content);
+        String email_info = "Email:\t\t\t" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+        userInfo.setText(email_info);
 
         signOutClick.setOnClickListener(new View.OnClickListener() {
             @Override
