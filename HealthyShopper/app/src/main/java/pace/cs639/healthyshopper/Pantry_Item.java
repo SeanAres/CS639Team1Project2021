@@ -4,18 +4,18 @@ public class Pantry_Item {
 
     private String name;
     private String nutrition;
-    private int max;
-    private int total;
+    private String max;
+    private String total;
 
 
     Pantry_Item(){
         this.name = "default";
-        this.total = 0;
-        this.max = 5;
+        this.total = "0";
+        this.max = "5";
         this.nutrition = "default";
     }
 
-    Pantry_Item(String name, String nutrition, int max, int total){
+    Pantry_Item(String name, String nutrition, String max, String total){
         this.name = name;
         this.nutrition = nutrition;
         this.max = max;
@@ -28,10 +28,10 @@ public class Pantry_Item {
     public String getNutrition() {
         return nutrition;
     }
-    public int getMax() {
+    public String getMax() {
         return max;
     }
-    public int getTotal() {
+    public String getTotal() {
         return total;
     }
 
@@ -43,11 +43,11 @@ public class Pantry_Item {
        this.nutrition = nutrition;
     }
 
-    public void setMax(int max) {
+    public void setMax(String max) {
         this.max = max;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 }

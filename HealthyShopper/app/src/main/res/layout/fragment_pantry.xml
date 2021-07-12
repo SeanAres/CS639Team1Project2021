@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipChildren="false"
@@ -12,7 +17,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id = "@+id/pantryRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+       />
+
 
     <TextView
         android:id="@+id/nutrientText"
@@ -60,7 +67,6 @@
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/calculate_btn"
         android:layout_width="wrap_content"
@@ -77,4 +83,6 @@
 
 
 
+
 </LinearLayout>
+</ScrollView>
