@@ -64,6 +64,7 @@
                 android:ems="10"
                 android:hint="@string/edit_email"
                 android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
                 android:textColor="@color/primaryTextColor" />
 
             <EditText
@@ -75,6 +76,7 @@
                 android:ems="10"
                 android:hint="@string/edit_password"
                 android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 android:textColor="@color/primaryTextColor" />
 
             <Button

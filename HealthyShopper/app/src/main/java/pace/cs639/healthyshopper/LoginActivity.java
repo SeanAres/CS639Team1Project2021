@@ -3,6 +3,7 @@ package pace.cs639.healthyshopper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,15 +11,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -51,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         button_login.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                    signIn();
+                    signIn(v);
             }
         });
 
@@ -65,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    signIn();
+                    signIn(v);
                 }
                 return false;
             }
@@ -73,9 +71,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void signIn() {
+    private void signIn(View view) {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
+
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
 
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("Enter your email");
@@ -126,5 +131,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
     }
+
 
 }
