@@ -27,6 +27,10 @@
     <string name="label_txt">Apple</string>
     <string name="pantry_count">0/5</string>
     <string name="food_txt">Cal: 5, Prt: 5, Fat: 5, Carb: 5</string>
+    <string name="defaultInfo">Default</string>
+    <string name="instructions">Add something new to your shopping list!</string>
+    <string name="food_name_hint">Food Name</string>
+    <string name="loading_test">Loading...</string>
     <string-array name="food_array">
         <item>Food 1</item>
         <item>Food 2</item>

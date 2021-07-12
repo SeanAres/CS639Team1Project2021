@@ -22,8 +22,6 @@ public class FetchNutrients extends AsyncTask<String, Void, String> {
 
 
 
-
-
     FetchNutrients(TextView nutrientText) {
         this.mNutrientTextView = new WeakReference<>(nutrientText);
 
