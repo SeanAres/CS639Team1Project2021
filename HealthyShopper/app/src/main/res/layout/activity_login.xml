@@ -14,7 +14,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:visibility="gone"/>
 
-    <TextView
+<!--    <TextView
         android:id="@+id/appTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,14 @@
         android:textColor="@color/primaryColor"
         android:textSize="70sp"
         android:textStyle="bold"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"/>-->
+
+    <ImageView
+        android:id="@+id/healthyShopperLogo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/healthyshopper" />
 
     <FrameLayout
         android:layout_width="match_parent"

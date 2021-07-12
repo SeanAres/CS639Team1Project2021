@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -13,7 +14,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:visibility="invisible"/>
 
-    <TextView
+<!--    <TextView
         android:id="@+id/appTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +25,14 @@
         android:textColor="@color/primaryColor"
         android:textSize="70sp"
         android:textStyle="bold"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"/>-->
+
+    <ImageView
+        android:id="@+id/healthyShopperLogo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/healthyshopper" />
 
     <FrameLayout
         android:layout_width="match_parent"

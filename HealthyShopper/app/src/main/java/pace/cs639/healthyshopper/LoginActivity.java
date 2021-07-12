@@ -15,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -75,9 +79,11 @@ public class LoginActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("Enter your email");
+            return;
         }
         else if(TextUtils.isEmpty(password)){
             editTextPassword.setError("Enter your password");
+            return;
         }
         else{
             progress.setVisibility(View.VISIBLE);
@@ -90,12 +96,14 @@ public class LoginActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 //updateUI(user)
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                progress.setVisibility(View.GONE);
                                 finish();
                             } else {
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Wrong Email or Password.",
                                         Toast.LENGTH_SHORT).show();
                                 progress.setVisibility(View.GONE);
+                                return;
                                 //updateUI(null);
                             }
                         }
