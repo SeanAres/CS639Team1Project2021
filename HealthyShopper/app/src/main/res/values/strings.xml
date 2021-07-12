@@ -18,6 +18,7 @@
     <string name="edit_password">Password</string>
     <string name="button_login">Login</string>
     <string name="login">Login</string>
+    <string name="sign_out">Sign Out</string>
     <string name="not_registered_yet">Not registered yet</string>
     <string name="register">Register</string>
     <string name="already_have_an_account">Already have an account</string>
@@ -39,6 +40,5 @@
         <item>Description 1</item>
         <item>Description 2</item>
     </string-array>
-
 
 </resources>
