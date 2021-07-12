@@ -19,5 +19,6 @@
     <string name="not_registered_yet">Not registered yet?</string>
     <string name="register">Register</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_out">Sign Out</string>
 
 </resources>
