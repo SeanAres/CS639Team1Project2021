@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".shopping_list">
+    tools:context=".shopping_list"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shopping_list_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/shopping_List_label" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/SL_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/instructions"
+        android:textSize="20sp"
+        android:textColor="@color/primaryTextColor" />
+
+    <TextView
+        android:id="@+id/SL_infoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/defaultInfo"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:gravity="center_horizontal"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/food_name_hint"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="4dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id = "@+id/SL_FoodInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences|textImeMultiLine"
+                android:singleLine="true"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:hint="Quantity"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id = "@+id/SL_QtyInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textImeMultiLine|number"
+                android:singleLine="true"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/SL_AddItemBtn"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:text="+"
+        android:textSize="25sp"
+        android:scaleType="center"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:src="@android:drawable/ic_input_add"/>
+    </LinearLayout>
+
+</LinearLayout>

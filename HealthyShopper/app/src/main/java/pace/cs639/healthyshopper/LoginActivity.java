@@ -79,11 +79,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("Enter your email");
-            return;
         }
         else if(TextUtils.isEmpty(password)){
             editTextPassword.setError("Enter your password");
-            return;
         }
         else{
             progress.setVisibility(View.VISIBLE);
@@ -103,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Wrong Email or Password.",
                                         Toast.LENGTH_SHORT).show();
                                 progress.setVisibility(View.GONE);
-                                return;
                                 //updateUI(null);
                             }
                         }

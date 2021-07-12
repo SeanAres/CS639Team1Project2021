@@ -12,12 +12,25 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -36,6 +49,17 @@ public class pantry extends Fragment {
     private TextInputEditText nutrientsEditText;
     private TextView mNutrientsText;
     private MaterialButton calculateButton;
+    private MaterialButton addButton;
+    private TextInputEditText totalEditText;
+    private TextInputEditText maxEditText;
+    private RecyclerView pantryRecyclerView;
+    private static ArrayList<Pantry_Item> pantryList;
+    private TextInputEditText maxInput;
+    private TextInputEditText totalInput;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,10 +90,17 @@ public class pantry extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pantryList = new ArrayList<>();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+    private void setAdapter(PantryAdapter adapter) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        pantryRecyclerView.setLayoutManager(layoutManager);
+        pantryRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        pantryRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -79,10 +110,56 @@ public class pantry extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pantry, container, false);
         mNutrientsText = (TextView)view.findViewById(R.id.nutrientText);
         nutrientsEditText = (TextInputEditText)view.findViewById(R.id.nutrients);
-        final String TAG = "Pantry";
-        calculateButton = view.findViewById(R.id.calculate_btn);
+
+       
 
         // Set an error if the password is less than 8 characters.
+
+        totalEditText = (TextInputEditText)view.findViewById(R.id.totalEditText);
+        maxEditText = (TextInputEditText)view.findViewById(R.id.maxEditText);
+        final String TAG = "Pantry";
+        calculateButton = view.findViewById(R.id.calculate_btn);
+        addButton = view.findViewById(R.id.add_button);
+
+        pantryRecyclerView =  (RecyclerView)view.findViewById(R.id.pantryRecyclerView);
+        PantryAdapter adapter = new PantryAdapter(pantryList);
+        setAdapter(adapter);
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("pantry_items");
+        Log.i("MAINACTIVITY", myRef.toString());
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Pantry_Item item;
+                int counter = 0;
+
+                pantryList.clear();
+                adapter.notifyDataSetChanged();
+                //pantryList = new ArrayList<>();
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    item= (Pantry_Item) ds.getValue(Pantry_Item.class);
+                    Log.i("Pantry", counter + " - Name: " + item.getName()+ "Nutrition: " + item.getNutrition()+ "Max: " +
+                            item.getMax() + "Total: " + item.getTotal());
+                    String food_name = item.getName();
+                    String max_item = item.getMax();
+                    String total_item =item.getTotal();
+                    String food_ntr = item.getNutrition();
+                    pantryList.add(new Pantry_Item(food_name, food_ntr,max_item, total_item));
+                    adapter.notifyItemInserted(pantryList.size() - 1);
+
+                    counter++;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("MAINACTIVITY", "Failed to read value.", error.toException());
+            }
+        });
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,17 +191,40 @@ public class pantry extends Fragment {
                 }
                 else {
                     if (queryString.length() == 0) {
-
                         mNutrientsText.setText(R.string.no_search_term);
                     } else {
-
                         mNutrientsText.setText(R.string.no_network);
                     }
                 }
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String food_details = mNutrientsText.getText().toString();
+                String [] detail_list = food_details.split("\n",2);
+                String foodname = String.valueOf(detail_list[0]);
+
+                try {
+                    String nutrition = String.valueOf(detail_list[1]);
+                    String max = maxEditText.getText().toString().trim();
+                    String total =totalEditText.getText().toString().trim();
+                    Log.i("Food name", foodname);
+                    Log.i("Nutrition",nutrition);
+                    myRef = database.getReference("pantry_items");
+                    Pantry_Item pant = new Pantry_Item(foodname, nutrition,max, total);
+                    myRef.push().setValue(pant);
+                    }
 
 
+                    //pantryList.add(new Pantry_Item(foodname, nutrition,max, total));
+                    //adapter.notifyItemInserted(pantryList.size() - 1);
 
-
+                catch(Exception e){
+                    Log.i(TAG, "failed to load card");
+                    mNutrientsText.setText("Must calculate first!");
+                }
             }
         });
 
