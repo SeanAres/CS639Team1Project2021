@@ -27,7 +27,7 @@
         android:id="@+id/SL_infoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/defaultInfo"
+        android:text="@string/Default"
         android:textSize="20sp"
         android:textStyle="italic"
         android:gravity="center_horizontal"
