@@ -13,4 +13,28 @@
     <string name="no_network">No Network, check connection!</string>
     <string name="add_to_pantry_btntxt">Add to Pantry</string>
 
+    <string name="appName">Healthy Shopper</string>
+    <string name="edit_email">Email</string>
+    <string name="edit_password">Password</string>
+    <string name="button_login">Login</string>
+    <string name="login">Login</string>
+    <string name="not_registered_yet">Not registered yet</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account">Already have an account</string>
+
+    <string name="minus_string">-</string>
+    <string name="plus_string">+</string>
+    <string name="label_txt">Apple</string>
+    <string name="pantry_count">0/5</string>
+    <string name="food_txt">Cal: 5, Prt: 5, Fat: 5, Carb: 5</string>
+    <string-array name="food_array">
+        <item>Food 1</item>
+        <item>Food 2</item>
+    </string-array>
+    <string-array name="food_description">
+        <item>Description 1</item>
+        <item>Description 2</item>
+    </string-array>
+
+
 </resources>

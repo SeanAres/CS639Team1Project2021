@@ -3,6 +3,11 @@ package pace.cs639.healthyshopper;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
+
+
+
+
+import com.google.android.material.textfield.TextInputEditText;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,8 +15,15 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+
+
 public class FetchNutrients extends AsyncTask<String, Void, String> {
     private WeakReference<TextView> mNutrientTextView;
+
+
+
+
+
     FetchNutrients(TextView nutrientText) {
         this.mNutrientTextView = new WeakReference<>(nutrientText);
 
@@ -26,19 +38,29 @@ public class FetchNutrients extends AsyncTask<String, Void, String> {
             JSONObject food = foodArray.getJSONObject(0);
             nutrients = food.getString(  "lowercaseDescription") + "\n";
             JSONArray nutrientsArray = food.getJSONArray("foodNutrients");
-            int i = 0;
-            while(i< nutrientsArray.length()){
-                JSONObject nutrient = nutrientsArray.getJSONObject(i);
+
+ 
+
+
+            JSONObject nutrient = nutrientsArray.getJSONObject(0);
                 try {
-                    nutrients = nutrients + nutrient.getString("nutrientName") + ": " + nutrient.getString("value") + "\n";
+                    nutrients = nutrients + "Protein" + ": " + nutrient.getString("value") + ", ";
+                    nutrient = nutrientsArray.getJSONObject(1);
+                    nutrients = nutrients + "Fat" + ": " + nutrient.getString("value") + ", ";
+                    nutrient = nutrientsArray.getJSONObject(2) ;
+                    nutrients = nutrients + "Carbs" + ": " + nutrient.getString("value") + ", ";
+                    nutrient = nutrientsArray.getJSONObject(3);
+                    nutrients = nutrients + "Calories" + ": " + nutrient.getString("value") + " ";
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                // Move to the next item.
-                i++;
-            }
+
+
+
             if (nutrients != null) {
                 mNutrientTextView.get().setText(nutrients);
+
+
 
             }
             else {
@@ -49,6 +71,7 @@ public class FetchNutrients extends AsyncTask<String, Void, String> {
             e.printStackTrace();
             mNutrientTextView.get().setText("No Results, check spelling!");
         }
+
     }
 
     @Override
