@@ -38,17 +38,15 @@ public class settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_pantry, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
         signOutClick = (TextView)view.findViewById(R.id.signOutClick);
 
         signOutClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
-                builder.setTitle("Are you sure you want to sing out?");
-                builder.setMessage("Are you sure you want to sing out?");
-
+                builder.setTitle("Are you sure you want to sign out?");
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -64,9 +62,12 @@ public class settings extends Fragment {
                         startActivity(intent);
                     }
                 });
+                builder.show();
             }
         });
 
         return view;
     }
+
+
 }

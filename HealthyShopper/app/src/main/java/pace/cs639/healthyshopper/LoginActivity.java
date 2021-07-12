@@ -7,15 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView registerClick;
     private Button button_login;
     private FirebaseAuth mAuth;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         registerClick = findViewById(R.id.registerClick);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        progress = findViewById(R.id.loginProgress);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -57,6 +58,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    signIn();
+                }
+                return false;
+            }
+        });
+
     }
 
     private void signIn() {
@@ -65,13 +75,12 @@ public class LoginActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("Enter your email");
-            return;
         }
         else if(TextUtils.isEmpty(password)){
             editTextPassword.setError("Enter your password");
-            return;
         }
         else{
+            progress.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -84,9 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                                 finish();
                             } else {
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.makeText(LoginActivity.this, "Wrong Email or Password.",
                                         Toast.LENGTH_SHORT).show();
-                                return;
+                                progress.setVisibility(View.GONE);
                                 //updateUI(null);
                             }
                         }

@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView loginClick;
     private Button button_register;
     private FirebaseAuth mAuth;
-
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         loginClick = findViewById(R.id.loginClick);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        progress = findViewById(R.id.registerProgress);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -49,6 +48,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     createAccount();
+            }
+        });
+
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    createAccount();
+                }
+                return false;
             }
         });
 
@@ -66,21 +74,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("Enter your email");
-            return;
         }
         else if(TextUtils.isEmpty(password)){
             editTextPassword.setError("Enter your password");
-            return;
         }
         else if(password.length()<4){
             editTextPassword.setError("Password must be more than 4 characters");
-            return;
         }
-/*//        else if(isVallidEmail(email)){
-//            editTextEmail.setError("Enter a valid email");
-//            return;
-//        }*/
+        else if(!isVallidEmail(email)){
+            editTextEmail.setError("Enter a valid email");
+        }
         else{
+            progress.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -94,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+                                progress.setVisibility(View.GONE);
                             }
                         }
                     });
