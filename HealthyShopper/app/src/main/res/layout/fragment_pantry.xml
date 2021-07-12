@@ -8,6 +8,12 @@
     android:padding="24dp"
     android:paddingTop="16dp">
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/pantryRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/nutrientText"
         android:layout_width="match_parent"
@@ -27,6 +33,32 @@
             android:inputType="text"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:hint="Enter in total items adding">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id = "@+id/totalEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:hint="Enter in max amount wanted in pantry">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id = "@+id/maxEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.button.MaterialButton
@@ -36,6 +68,13 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="@string/calculate_btn" />
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Item to Pantry" />
+
 
 
 </LinearLayout>

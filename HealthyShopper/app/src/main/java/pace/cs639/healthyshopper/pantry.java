@@ -15,9 +15,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
@@ -36,6 +42,15 @@ public class pantry extends Fragment {
     private TextInputEditText nutrientsEditText;
     private TextView mNutrientsText;
     private MaterialButton calculateButton;
+    private MaterialButton addButton;
+    private TextInputEditText totalEditText;
+    private TextInputEditText maxEditText;
+    private RecyclerView pantryRecyclerView;
+    private static ArrayList<Pantry_Item> pantryList;
+    private TextInputEditText maxInput;
+    private TextInputEditText totalInput;
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,10 +81,17 @@ public class pantry extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pantryList = new ArrayList<>();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+    private void setAdapter(PantryAdapter adapter) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        pantryRecyclerView.setLayoutManager(layoutManager);
+        pantryRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        pantryRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -79,10 +101,21 @@ public class pantry extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pantry, container, false);
         mNutrientsText = (TextView)view.findViewById(R.id.nutrientText);
         nutrientsEditText = (TextInputEditText)view.findViewById(R.id.nutrients);
-        final String TAG = "Pantry";
-        calculateButton = view.findViewById(R.id.calculate_btn);
+
+       
 
         // Set an error if the password is less than 8 characters.
+
+        totalEditText = (TextInputEditText)view.findViewById(R.id.totalEditText);
+        maxEditText = (TextInputEditText)view.findViewById(R.id.maxEditText);
+        final String TAG = "Pantry";
+        calculateButton = view.findViewById(R.id.calculate_btn);
+        addButton = view.findViewById(R.id.add_button);
+
+        pantryRecyclerView =  (RecyclerView)view.findViewById(R.id.pantryRecyclerView);
+        PantryAdapter adapter = new PantryAdapter(pantryList);
+        setAdapter(adapter);
+
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,17 +147,34 @@ public class pantry extends Fragment {
                 }
                 else {
                     if (queryString.length() == 0) {
-
                         mNutrientsText.setText(R.string.no_search_term);
                     } else {
-
                         mNutrientsText.setText(R.string.no_network);
                     }
                 }
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                String food_details = mNutrientsText.getText().toString();
+                String [] detail_list = food_details.split("\n",2);
+                String foodname = String.valueOf(detail_list[0]);
 
-
-
+                try {
+                    String nutrition = String.valueOf(detail_list[1]);
+                    int max = Integer.parseInt(maxEditText.getText().toString().trim());
+                    int total = Integer.parseInt(totalEditText.getText().toString().trim());
+                    Log.i("Food name", foodname);
+                    Log.i("Nutrition",nutrition);
+                    pantryList.add(new Pantry_Item(foodname, nutrition,max, total));
+                    adapter.notifyItemInserted(pantryList.size() - 1);
+                }
+                catch(Exception e){
+                    Log.i(TAG, "failed to load card");
+                    mNutrientsText.setText("Must calculate first!");
+                }
             }
         });
 
