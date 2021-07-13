@@ -58,6 +58,7 @@ public class pantry extends Fragment {
     private TextInputEditText totalInput;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference userRef;
 
 
 
@@ -127,6 +128,7 @@ public class pantry extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference().child("pantry_items");
+
         Log.i("MAINACTIVITY", myRef.toString());
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -214,7 +216,23 @@ public class pantry extends Fragment {
                     Log.i("Nutrition",nutrition);
                     myRef = database.getReference("pantry_items");
                     Pantry_Item pant = new Pantry_Item(foodname, nutrition,max, total);
-                    myRef.push().setValue(pant);
+                    int found = 0;
+                    for (int i = 0; i < pantryList.size(); i++) {
+                        if (pantryList.get(i).getName().equals(foodname)) {
+                            found = 1;
+                            //break;
+                        }
+                    }
+
+                    if(found==0) {
+                        myRef.child(foodname).setValue(pant);
+                    }
+                    else {
+                        Log.i("pantry", "found==1");
+                        Toast.makeText(view.getContext(), "Food already in list!", Toast.LENGTH_SHORT).show();
+                        mNutrientsText.setText("Food already in list!");
+
+                    }
                     }
 
 

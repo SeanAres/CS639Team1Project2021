@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -124,17 +125,18 @@ public class shopping_list extends Fragment {
                     String [] cal = food_ntr.split("Calories: ");
                     Log.i("Calorie split", cal[1]);
                     int qty = Integer.parseInt(max_item)-Integer.parseInt(total_item);
-                    double total_calories = Double.parseDouble(cal[1].trim())*qty;
-                    String str_calories = String.valueOf(total_calories);
+                    String total_calories = new DecimalFormat("#.##").format(Double.parseDouble(cal[1].trim())*qty);
+                    //String str_calories = String.valueOf(total_calories);
                     SL_FoodItem food = new SL_FoodItem();
-                    food.setCal(str_calories);
+                    food.setCal(total_calories);
                     food.setName(food_name);
                     food.setQty(qty);
-                    foodList.add(food);
-                    adapter.notifyItemInserted(foodList.size() - 1);
+                    if(Integer.parseInt(max_item)!=Integer.parseInt(total_item)) {
+                        foodList.add(food);
+                        adapter.notifyItemInserted(foodList.size() - 1);
+                    }
 
-                    //pantryList.add(new Pantry_Item(food_name, food_ntr,max_item, total_item));
-                    //adapter.notifyItemInserted(pantryList.size() - 1);
+
 
                     counter++;
                 }

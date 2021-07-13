@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,8 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
 
     private ArrayList<SL_FoodItem> foodList;
     //Create the View Holder
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     public AddFoodItemAdapter(ArrayList<SL_FoodItem> foodList){
         this.foodList = foodList;
@@ -41,9 +46,25 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
         holder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                foodList.remove(holder.getAdapterPosition());
+               foodList.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
                 notifyItemRangeChanged(holder.getAdapterPosition(), foodList.size());
+            }
+        });
+        holder.add_to_pantryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //database = FirebaseDatabase.getInstance();
+                //myRef = database.getReference().child("pantry_items");
+                //int qty = foodList.get(holder.getPosition()).getQty();
+               //String name = foodList.get(holder.getPosition()).getName();
+                //String total = myRef.child(name).child("total").toString();
+                //String new_total = String.valueOf(qty + Integer.parseInt(total));
+                //myRef.child(name).child("total").setValue(new_total);
+
+
+
+
             }
         });
     }
@@ -56,6 +77,7 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
     public class ShoppingItemViewHolder extends RecyclerView.ViewHolder{
         private TextView nameView, qtyView, calView;
         private Button delBtn;
+        private Button add_to_pantryBtn;
 
         public ShoppingItemViewHolder(@NonNull @org.jetbrains.annotations.NotNull View itemView) {
             super(itemView);
@@ -64,7 +86,7 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
             calView = itemView.findViewById(R.id.SL_CalView);
             delBtn = itemView.findViewById(R.id.SL_DeleteBtn);
             calView = itemView.findViewById(R.id.SL_CalView);
-
+           add_to_pantryBtn = itemView.findViewById(R.id.SL_AddtoPantryBtn);
         }
     }
 }
