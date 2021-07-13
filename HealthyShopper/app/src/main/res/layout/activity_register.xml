@@ -3,11 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
+    <ProgressBar
+        android:id="@+id/registerProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:visibility="invisible"/>
 
-    <TextView
+<!--    <TextView
         android:id="@+id/appTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +25,14 @@
         android:textColor="@color/primaryColor"
         android:textSize="70sp"
         android:textStyle="bold"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"/>-->
+
+    <ImageView
+        android:id="@+id/healthyShopperLogo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/healthyshopper" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -42,7 +56,7 @@
                 android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/RA_editTextEmail"
+                android:id="@+id/editTextEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -50,10 +64,11 @@
                 android:ems="10"
                 android:hint="@string/edit_email"
                 android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
                 android:textColor="@color/primaryTextColor" />
 
             <EditText
-                android:id="@+id/RA_editTextPassword"
+                android:id="@+id/editTextPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -61,6 +76,7 @@
                 android:ems="10"
                 android:hint="@string/edit_password"
                 android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 android:textColor="@color/primaryTextColor" />
 
             <Button

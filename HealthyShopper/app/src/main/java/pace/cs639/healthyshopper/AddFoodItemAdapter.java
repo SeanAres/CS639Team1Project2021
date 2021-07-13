@@ -61,6 +61,7 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
             super(itemView);
             nameView = itemView.findViewById(R.id.SL_FoodNameView);
             qtyView = itemView.findViewById(R.id.SL_QtyView);
+            calView = itemView.findViewById(R.id.SL_CalView);
             delBtn = itemView.findViewById(R.id.SL_DeleteBtn);
             calView = itemView.findViewById(R.id.SL_CalView);
 

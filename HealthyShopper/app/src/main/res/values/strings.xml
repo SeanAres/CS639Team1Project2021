@@ -18,6 +18,7 @@
     <string name="edit_password">Password</string>
     <string name="button_login">Login</string>
     <string name="login">Login</string>
+    <string name="sign_out">Sign Out</string>
     <string name="not_registered_yet">Not registered yet</string>
     <string name="register">Register</string>
     <string name="already_have_an_account">Already have an account</string>
@@ -27,6 +28,11 @@
     <string name="label_txt">Apple</string>
     <string name="pantry_count">0/5</string>
     <string name="food_txt">Cal: 5, Prt: 5, Fat: 5, Carb: 5</string>
+    <string name="Default">Default</string>
+    <string name="instructions">Add something new to your shopping list!</string>
+    <string name="food_name_hint">Food Name</string>
+    <string name="loading_test">Loading...</string>
+    <string name="STT_account_info">Account Info</string>
     <string-array name="food_array">
         <item>Food 1</item>
         <item>Food 2</item>
@@ -35,6 +41,5 @@
         <item>Description 1</item>
         <item>Description 2</item>
     </string-array>
-
 
 </resources>

@@ -11,16 +11,28 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shopping_list_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"/>
 
     <TextView
+        android:id="@+id/SL_instructions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:text="Add something new to your shopping list!"
+        android:text="@string/instructions"
         android:textSize="20sp"
         android:textColor="@color/primaryTextColor" />
+
+    <TextView
+        android:id="@+id/SL_infoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Default"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:gravity="center_horizontal"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,11 +41,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="2dp"
-            android:hint="Food Name"
+            android:hint="@string/food_name_hint"
             android:layout_gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="4dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id = "@+id/SL_FoodInput"

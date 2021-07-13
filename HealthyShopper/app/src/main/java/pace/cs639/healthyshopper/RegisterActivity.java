@@ -3,16 +3,21 @@ package pace.cs639.healthyshopper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,23 +30,35 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView loginClick;
     private Button button_register;
     private FirebaseAuth mAuth;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
         button_register = findViewById(R.id.button_register);
         loginClick = findViewById(R.id.loginClick);
-        editTextEmail = findViewById(R.id.RA_editTextEmail);
-        editTextPassword = findViewById(R.id.RA_editTextPassword);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        progress = findViewById(R.id.registerProgress);
 
         mAuth = FirebaseAuth.getInstance();
 
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    createAccount();
+                    createAccount(v);
+            }
+        });
+
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    createAccount(v);
+                }
+                return false;
             }
         });
 
@@ -53,22 +70,31 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void createAccount() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+    private void createAccount(View view) {
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputManager != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
 
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("Enter your email");
-            return;
         }
         else if(TextUtils.isEmpty(password)){
             editTextPassword.setError("Enter your password");
-            return;
         }
         else if(password.length()<4){
             editTextPassword.setError("Password must be more than 4 characters");
         }
+        else if(!isVallidEmail(email)){
+            editTextEmail.setError("Enter a valid email");
+        }
         else{
+            progress.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -82,19 +108,24 @@ public class RegisterActivity extends AppCompatActivity {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+                                progress.setVisibility(View.GONE);
                             }
                         }
                     });
         }
     }
 
-    private void updateUI(FirebaseUser user) {
-        if(user.equals(null)){
-            editTextEmail.setText("");
-            editTextPassword.setText("");
-        }
-        else {
-            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-        }
+//    private void updateUI(FirebaseUser user) {
+//        if(user.equals(null)){
+//            editTextEmail.setText("");
+//            editTextPassword.setText("");
+//        }
+//        else {
+//            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+//        }
+//    }
+
+    private Boolean isVallidEmail(CharSequence target){
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }

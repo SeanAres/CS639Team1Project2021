@@ -1,20 +1,27 @@
 package pace.cs639.healthyshopper;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class SL_FoodItem {
 
         private String Name;
         private int Qty;
+
         private String Cal = "0";
 
-        SL_FoodItem(){
-            this.Name = "empty";
-            this.Qty = 0;
-        }
 
-        SL_FoodItem(String name, int qty){
+    SL_FoodItem(String name, int qty, String cal){
             this.Name = name;
             this.Qty = qty;
+            this.Cal = cal;
         }
+
+    protected SL_FoodItem(Parcel in) {
+        Name = in.readString();
+        Qty = in.readInt();
+        Cal = in.readString();
+    }
 
         public String getName() {
             return Name;
@@ -27,6 +34,8 @@ public class SL_FoodItem {
         return Cal;
     }
 
+        public String getCal() {return Cal;}
+
         public void setName(String Name) {
             this.Name = Name;
         }
@@ -34,7 +43,10 @@ public class SL_FoodItem {
         public void setQty(int qty) {
             this.Qty = qty;
         }
+
         public void setCal(String cal) {
         this.Cal = cal;
     }
+
+
 }
