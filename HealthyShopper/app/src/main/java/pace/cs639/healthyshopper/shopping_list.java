@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -54,6 +56,8 @@ public class shopping_list extends Fragment {
     DatabaseReference myRef;
     private TextView loadView;
     private TextView calView;
+    private FirebaseAuth mAuth;
+    private String email;
     private static DecimalFormat df1 = new DecimalFormat("#.#");
 
 
@@ -103,8 +107,11 @@ public class shopping_list extends Fragment {
         addPntryBtn = (Button) view.findViewById(R.id.SL_AddtoPantryBtn);
 
         //Database code starts here
+        mAuth = FirebaseAuth.getInstance();
+        email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+        email = email.replace(".","");
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference().child("pantry_items");
+        myRef = database.getReference().child(email);
         Log.i("MAINACTIVITY", myRef.toString());
 
         //Database listener
@@ -272,7 +279,7 @@ public class shopping_list extends Fragment {
                                 String total = "0";
                                 Log.i("Food name", foodname);
                                 Log.i("Nutrition", nutrition);
-                                myRef = database.getReference("pantry_items");
+                                myRef = database.getReference(email);
                                 Pantry_Item pant = new Pantry_Item(foodname, nutrition, max, total);
                                 myRef.child(foodname).setValue(pant);
                                 //myRef.push().setValue(pant);

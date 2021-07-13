@@ -9,11 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.ShoppingItemViewHolder>{
 
@@ -21,6 +23,8 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
     //Create the View Holder
     FirebaseDatabase database;
     DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+    private String email;
 
     public AddFoodItemAdapter(ArrayList<SL_FoodItem> foodList){
         this.foodList = foodList;
@@ -54,8 +58,11 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
         holder.add_to_pantryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAuth = FirebaseAuth.getInstance();
+                email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+                email = email.replace(".","");
                 database = FirebaseDatabase.getInstance();
-                myRef = database.getReference().child("pantry_items");
+                myRef = database.getReference().child(email);
                 int qty = foodList.get(holder.getPosition()).getQty();
                String name = foodList.get(holder.getPosition()).getName();
                myRef.child(name).child("total").setValue(String.valueOf(qty));
