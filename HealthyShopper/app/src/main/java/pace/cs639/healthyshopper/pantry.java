@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -58,7 +60,8 @@ public class pantry extends Fragment {
     private TextInputEditText totalInput;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    DatabaseReference userRef;
+    private FirebaseAuth mAuth;
+    private String email;
 
 
 
@@ -126,8 +129,11 @@ public class pantry extends Fragment {
         PantryAdapter adapter = new PantryAdapter(pantryList);
         setAdapter(adapter);
 
+        mAuth = FirebaseAuth.getInstance();
+        email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+        email = email.replace(".","");
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference().child("pantry_items");
+        myRef = database.getReference().child(email);
 
         Log.i("MAINACTIVITY", myRef.toString());
 
@@ -214,7 +220,7 @@ public class pantry extends Fragment {
                     String total =totalEditText.getText().toString().trim();
                     Log.i("Food name", foodname);
                     Log.i("Nutrition",nutrition);
-                    myRef = database.getReference("pantry_items");
+                    myRef = database.getReference(email);
                     Pantry_Item pant = new Pantry_Item(foodname, nutrition,max, total);
                     int found = 0;
                     for (int i = 0; i < pantryList.size(); i++) {

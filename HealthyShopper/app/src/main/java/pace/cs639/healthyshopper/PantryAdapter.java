@@ -9,15 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.MyViewHolder> {
     private ArrayList<Pantry_Item> pantryList;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+    private String email;
     public PantryAdapter(ArrayList<Pantry_Item> pantryList){
         this.pantryList = pantryList;
 
@@ -42,8 +46,11 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.MyViewHold
         holder.minusTotal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAuth = FirebaseAuth.getInstance();
+                email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+                email = email.replace(".","");
                 database = FirebaseDatabase.getInstance();
-                myRef = database.getReference().child("pantry_items");
+                myRef = database.getReference().child(email);
                 int new_total = Integer.parseInt(pantryList.get(holder.getPosition()).getTotal())-1;
                 String name = pantryList.get(holder.getPosition()).getName();
                 String str_total = String.valueOf(new_total);
@@ -59,7 +66,10 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.MyViewHold
             @Override
             public void onClick(View v) {
                 database = FirebaseDatabase.getInstance();
-                myRef = database.getReference().child("pantry_items");
+                mAuth = FirebaseAuth.getInstance();
+                email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+                email = email.replace(".","");
+                myRef = database.getReference().child(email);
                 int new_max = Integer.parseInt(pantryList.get(holder.getPosition()).getMax())-1;
                 String name = pantryList.get(holder.getPosition()).getName();
                 String str_max = String.valueOf(new_max);
