@@ -49,10 +49,12 @@ public class shopping_list extends Fragment {
 
     private Button addBtn;
     private Button delBtn;
+    private Button addPntryBtn;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    private TextView infoView;
+    private TextView loadView;
     private TextView calView;
+    private static DecimalFormat df1 = new DecimalFormat("#.#");
 
 
     public shopping_list() {
@@ -91,13 +93,14 @@ public class shopping_list extends Fragment {
         SL_recycler = (RecyclerView) view.findViewById(R.id.shopping_list_recycler);
         AddFoodItemAdapter adapter = new AddFoodItemAdapter(foodList);
         setAdapter(adapter);
-        infoView = (TextView) view.findViewById(R.id.SL_infoView);
+        loadView = (TextView) view.findViewById(R.id.SL_infoView);
         calView = (TextView) view.findViewById(R.id.SL_CalView);
         foodNameInput = (TextInputEditText) view.findViewById(R.id.SL_FoodInput);
         qtyInput = (TextInputEditText) view.findViewById(R.id.SL_QtyInput);
 
         delBtn = (Button) view.findViewById(R.id.SL_DeleteBtn);
         addBtn = (Button) view.findViewById(R.id.SL_AddItemBtn);
+        addPntryBtn = (Button) view.findViewById(R.id.SL_AddtoPantryBtn);
 
         //Database code starts here
         database = FirebaseDatabase.getInstance();
@@ -114,15 +117,15 @@ public class shopping_list extends Fragment {
                 foodList.clear();
                 adapter.notifyDataSetChanged();
 
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    item= (Pantry_Item) ds.getValue(Pantry_Item.class);
-                    Log.i("Shopping", counter + " - Name: " + item.getName()+ "Nutrition: " + item.getNutrition()+ "Max: " +
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    item = (Pantry_Item) ds.getValue(Pantry_Item.class);
+                    Log.i("Shopping", counter + " - Name: " + item.getName() + "Nutrition: " + item.getNutrition() + "Max: " +
                             item.getMax() + "Total: " + item.getTotal());
                     String food_name = item.getName();
                     String max_item = item.getMax();
-                    String total_item =item.getTotal();
+                    String total_item = item.getTotal();
                     String food_ntr = item.getNutrition();
-                    String [] cal = food_ntr.split("Calories: ");
+                    String[] cal = food_ntr.split("Calories: ");
                     Log.i("Calorie split", cal[1]);
                     int qty = Integer.parseInt(max_item)-Integer.parseInt(total_item);
                     String total_calories = new DecimalFormat("#.##").format(Double.parseDouble(cal[1].trim())*qty);
@@ -151,15 +154,22 @@ public class shopping_list extends Fragment {
         });
         //Database code ends
 
+        //TODO: Add an OnClickListener() to the add to pantry button.
+        // This should update the corresponding item in the pantry with the quantity that was in the shopping list.
+        //addPntryBtn.setOnClickListener(new View.OnClickListener() {
 
+        //    @Override
+        //    public void onClick(View v) {
 
+        //    }
+        //});
 
+        //TODO: Add Button updates the database with a new item, which contains 0/qty items(check for duplicates)
+        // This should automatically update the shopping list with the quantity you'd like.
 
-        addBtn.setOnClickListener(new View.OnClickListener()
-        {
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 InputMethodManager inputManager = (InputMethodManager)
                         getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (inputManager != null) {
@@ -167,11 +177,11 @@ public class shopping_list extends Fragment {
                             InputMethodManager.HIDE_NOT_ALWAYS);
                 }
 
-                String fName = foodNameInput.getText().toString().trim();
+                String fNameInput = foodNameInput.getText().toString().trim();
                 String results = "nothing";
                 String calories = "000cal";
-                infoView.setText(R.string.loading);
-                infoView.setVisibility(View.VISIBLE);
+                loadView.setText("Fetching your Food...");
+                loadView.setVisibility(View.VISIBLE);
 
                 //Query the food item to make sure they typed something edible.
                 ConnectivityManager connMgr = (ConnectivityManager)
@@ -183,53 +193,69 @@ public class shopping_list extends Fragment {
 
 
                 if (networkInfo != null && networkInfo.isConnected()
-                        && fName.length() != 0) {
+                        && fNameInput.length() != 0) {
                     try {
                         //.get fetches the results before continuing the main thread. This freezes the main thread but I need the
                         // results for the next part of the code.
 
-                        results = new FetchNutrients(infoView).execute(fName).get();
+                        results = new FetchNutrients(loadView).execute(fNameInput).get();
 
-                    }
-                    catch (InterruptedException e) {
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-                }
-                else {
-                    if (fName.length() == 0) {
+                } else {
+                    if (fNameInput.length() == 0) {
                         Toast.makeText(getContext(), "Enter a food for your list", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), "No network connection", Toast.LENGTH_SHORT).show();
                     }
                 }
 
-                if (results.contains("\"totalHits\":0")){
+                if (results.contains("\"totalHits\":0")) {
                     //do nothing, value was not found in the database
-                }
-                else {
-                    //reset the loading screen since value was valid, proceed as normal
-                    infoView.setText(R.string.Default);
-                    infoView.setVisibility(View.GONE);
-                    //get the calories we need from the object
+                } else {
+                    loadView.setText(results);
+                    loadView.setVisibility(View.GONE);
+
+                    //***copypaste onPostExecute, real messy but we need to format the JSON in results,
+                    // might add another button like pantry if I have time so we don't freeze the main thread***
                     try {
+                        String nutrients = null;
                         JSONObject jsonObject = new JSONObject(results);
                         JSONArray foodArray = jsonObject.getJSONArray("foods");
                         JSONObject food = foodArray.getJSONObject(0);
+                        nutrients = food.getString(  "lowercaseDescription") + "\n";
                         JSONArray nutrientsArray = food.getJSONArray("foodNutrients");
-                        jsonObject = nutrientsArray.getJSONObject(3);
-                        calories = jsonObject.getString("value") + "cal/each";
-                        Log.d("CALAMOUNT:", calories);
-                    }catch(JSONException e){
+
+                        JSONObject nutrient = nutrientsArray.getJSONObject(0);
+                        try {
+                            nutrients = nutrients + "Protein" + ": " + nutrient.getString("value") + ", ";
+                            nutrient = nutrientsArray.getJSONObject(1);
+                            nutrients = nutrients + "Fat" + ": " + nutrient.getString("value") + ", ";
+                            nutrient = nutrientsArray.getJSONObject(2) ;
+                            nutrients = nutrients + "Carbs" + ": " + nutrient.getString("value") + ", ";
+                            nutrient = nutrientsArray.getJSONObject(3);
+                            nutrients = nutrients + "Calories" + ": " + nutrient.getString("value") + " ";
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        loadView.setText(nutrients);
+                    } catch (JSONException e) {
                         e.printStackTrace();
+                        loadView.setText("No Results, check spelling!");
                     }
-                    Log.d("RESULT_VALUE", results);
+                    //********************onPostExecute End here************************
+
+                    //reset the loading screen since value was valid, proceed as normal
                     String qty = qtyInput.getText().toString().trim();
-                    if (fName.length() != 0 && qty.length() != 0) {
+                    if (qty.length() != 0) {
                         int found = 0;
+                        //detect duplicate food
                         for (int i = 0; i < foodList.size(); i++) {
-                            if (foodList.get(i).getName().equals(fName)) {
+                            if (foodList.get(i).getName().equals(fNameInput)) {
                                 found = 1;
                                 break;
                             }
@@ -237,11 +263,25 @@ public class shopping_list extends Fragment {
                         if (found == 1) {
                             Toast.makeText(getContext(), "Food already in list!", Toast.LENGTH_SHORT).show();
                         } else {
-                            foodList.add(new SL_FoodItem(fName, Integer.parseInt(qty), calories));
-                            adapter.notifyItemInserted(foodList.size() - 1);
-                            Toast.makeText(getContext(), "Shopping list updated!", Toast.LENGTH_SHORT).show();
-
+                            String[] detail_list = loadView.getText().toString().split("\n", 2);
+                            String foodname = String.valueOf(detail_list[0]);
+                            try {
+                                //push item into the database with 0 total items and quantity desired as max
+                                String nutrition = String.valueOf(detail_list[1]);
+                                String max = qty;
+                                String total = "0";
+                                Log.i("Food name", foodname);
+                                Log.i("Nutrition", nutrition);
+                                myRef = database.getReference("pantry_items");
+                                Pantry_Item pant = new Pantry_Item(foodname, nutrition, max, total);
+                                myRef.push().setValue(pant);
+                                Toast.makeText(getContext(), "Shopping list updated!", Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Log.i("SHOPPINGLISTADD:", "failed to load card");
+                            }
                         }
+                    }else{
+                        Toast.makeText(getContext(), "Enter quantity desired", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
