@@ -19,3 +19,6 @@ CS639 Team 1's Project 2021
 
 Below is a design of our application mapping out the different activities:
 ![Design](https://user-images.githubusercontent.com/60992141/124345816-20223200-dba9-11eb-9761-20f6ce0e1c53.jpg)
+
+Presentation slide link:
+https://docs.google.com/presentation/d/1SU0KUjHsQJB_KTNCrygFi5-tVXl6FozmwFvhNdZnOaY/edit#slide=id.p
