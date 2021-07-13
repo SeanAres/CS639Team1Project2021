@@ -13,7 +13,7 @@ CS639 Team 1's Project 2021
  ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_2021-06-28-01-29-34.png?raw=true)
  ![](https://github.com/SeanAres/CS639Team1Project2021/blob/master/Screenshot_20210629-220915.png?raw=true)
 
-5. We will be using the ESHA Research Nutrition API portal. This API will give us information about each food item's nutritional information with a straightforward JSON format. Link: https://fdc.nal.usda.gov/
+5. We will be using the FDA USDA FoodData Central Database. This API will give us information about each food item's nutritional information with a straightforward JSON format. Link: https://fdc.nal.usda.gov/
    We will also be using the Firebase database to collect and store information for the user such that the user can view their app on multiple devices at their convenience.  
    Finally, we are planning to use a cache to store information locally on a phone such that we don't have to access the nutrition API too often.
 
