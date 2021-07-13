@@ -33,6 +33,8 @@
     <string name="food_name_hint">Food Name</string>
     <string name="loading_test">Loading...</string>
     <string name="STT_account_info">Account Info</string>
+    <string name="minus_total">Minus Total</string>
+    <string name="minus_max">Minus Max</string>
     <string-array name="food_array">
         <item>Food 1</item>
         <item>Food 2</item>

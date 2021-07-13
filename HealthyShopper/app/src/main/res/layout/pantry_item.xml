@@ -27,26 +27,26 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/minus1"
+                    android:id="@+id/minus_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginLeft="4dp"
                     android:backgroundTint="@color/red"
-                    android:text="@string/minus_string"
-                    android:textSize="34sp"
+                    android:text="@string/minus_total"
+                    android:textSize="8sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <Button
-                    android:id="@+id/plus1"
+                    android:id="@+id/minus_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/primaryDarkColor"
-                    android:text="@string/plus_string"
-                    android:textSize="34sp"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/minus_max"
+                    android:textSize="8sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -58,8 +58,8 @@
                     android:text="TextView"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/plus1"
-                    app:layout_constraintStart_toEndOf="@+id/minus1"
+                    app:layout_constraintEnd_toStartOf="@+id/minus_max"
+                    app:layout_constraintStart_toEndOf="@+id/minus_total"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/label_txt" />
 
@@ -70,7 +70,7 @@
                     android:text="@string/pantry_count"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/plus1"
+                    app:layout_constraintEnd_toStartOf="@+id/minus_max"
                     app:layout_constraintStart_toEndOf="@+id/food_label_tv"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,8 +82,8 @@
                     android:text="@string/food_txt"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/plus1"
-                    app:layout_constraintStart_toEndOf="@+id/minus1"
+                    app:layout_constraintEnd_toStartOf="@+id/minus_max"
+                    app:layout_constraintStart_toEndOf="@+id/minus_total"
                     app:layout_constraintTop_toBottomOf="@+id/food_label_tv" />
 
 
