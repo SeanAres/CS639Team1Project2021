@@ -7,7 +7,9 @@ public class SL_FoodItem {
 
         private String Name;
         private int Qty;
-        private String Cal;
+
+        private String Cal = "0";
+
 
     SL_FoodItem(String name, int qty, String cal){
             this.Name = name;
@@ -28,6 +30,9 @@ public class SL_FoodItem {
         public int getQty() {
             return Qty;
         }
+        public String getCal() {
+        return Cal;
+    }
 
         public String getCal() {return Cal;}
 
@@ -39,5 +44,9 @@ public class SL_FoodItem {
             this.Qty = qty;
         }
 
-        public void setCal(String Cal) { this.Cal = Cal; }
+        public void setCal(String cal) {
+        this.Cal = cal;
+    }
+
+
 }
