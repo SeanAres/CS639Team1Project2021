@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -34,6 +40,8 @@ public class shopping_list extends Fragment {
     private TextInputEditText qtyInput;
     private Button addBtn;
     private Button delBtn;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
 
     public shopping_list() {
@@ -76,6 +84,58 @@ public class shopping_list extends Fragment {
         qtyInput = (TextInputEditText) view.findViewById(R.id.SL_QtyInput);
         delBtn = (Button) view.findViewById(R.id.SL_DeleteBtn);
         addBtn = (Button) view.findViewById(R.id.SL_AddItemBtn);
+
+        //Database code starts here
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("pantry_items");
+        Log.i("MAINACTIVITY", myRef.toString());
+
+        //Database listener
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Pantry_Item item;
+                int counter = 0;
+                //reset list so that it can load the database on datachange
+                foodList.clear();
+                adapter.notifyDataSetChanged();
+
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    item= (Pantry_Item) ds.getValue(Pantry_Item.class);
+                    Log.i("Shopping", counter + " - Name: " + item.getName()+ "Nutrition: " + item.getNutrition()+ "Max: " +
+                            item.getMax() + "Total: " + item.getTotal());
+                    String food_name = item.getName();
+                    String max_item = item.getMax();
+                    String total_item =item.getTotal();
+                    String food_ntr = item.getNutrition();
+                    String [] cal = food_ntr.split("Calories: ");
+                    Log.i("Calorie split", cal[1]);
+                    int qty = Integer.parseInt(max_item)-Integer.parseInt(total_item);
+                    double total_calories = Double.parseDouble(cal[1].trim())*qty;
+                    String str_calories = String.valueOf(total_calories);
+                    SL_FoodItem food = new SL_FoodItem();
+                    food.setCal(str_calories);
+                    food.setName(food_name);
+                    food.setQty(qty);
+                    foodList.add(food);
+                    adapter.notifyItemInserted(foodList.size() - 1);
+
+                    //pantryList.add(new Pantry_Item(food_name, food_ntr,max_item, total_item));
+                    //adapter.notifyItemInserted(pantryList.size() - 1);
+
+                    counter++;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("MAINACTIVITY", "Failed to read value.", error.toException());
+            }
+        });
+        //Database code ends
+
         addBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
