@@ -22,3 +22,13 @@ Below is a design of our application mapping out the different activities:
 
 Presentation slide link:
 https://docs.google.com/presentation/d/1SU0KUjHsQJB_KTNCrygFi5-tVXl6FozmwFvhNdZnOaY/edit#slide=id.p
+
+
+Screenshots of the Healthy Shopper app:
+![HealthyShopper1](https://user-images.githubusercontent.com/60992141/125526224-085bf5dd-555e-4165-953e-ef74f7f22398.png)
+![HealthyShopper2](https://user-images.githubusercontent.com/60992141/125526248-922dd40f-2075-4348-b1cf-954c63724632.png)
+![HealthyShopper3](https://user-images.githubusercontent.com/60992141/125526254-13aa574c-af9e-4fc3-b345-3d1bc9899089.png)
+![HealthyShopper4](https://user-images.githubusercontent.com/60992141/125526278-6215ffb0-627c-4b22-a191-e06e67f80ac3.png)
+![HealthyShopper5](https://user-images.githubusercontent.com/60992141/125526297-d898822d-7168-4ff1-8239-1817405cbfbb.png)
+
+
