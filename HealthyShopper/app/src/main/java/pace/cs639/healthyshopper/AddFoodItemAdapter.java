@@ -54,13 +54,11 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
         holder.add_to_pantryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //database = FirebaseDatabase.getInstance();
-                //myRef = database.getReference().child("pantry_items");
-                //int qty = foodList.get(holder.getPosition()).getQty();
-               //String name = foodList.get(holder.getPosition()).getName();
-                //String total = myRef.child(name).child("total").toString();
-                //String new_total = String.valueOf(qty + Integer.parseInt(total));
-                //myRef.child(name).child("total").setValue(new_total);
+                database = FirebaseDatabase.getInstance();
+                myRef = database.getReference().child("pantry_items");
+                int qty = foodList.get(holder.getPosition()).getQty();
+               String name = foodList.get(holder.getPosition()).getName();
+               myRef.child(name).child("total").setValue(String.valueOf(qty));
 
 
 
