@@ -136,7 +136,7 @@ public class shopping_list extends Fragment {
                     food.setQty(qty);
                     if(Integer.parseInt(max_item)!=Integer.parseInt(total_item)) {
                         foodList.add(food);
-                        adapter.notifyItemInserted(foodList.size() - 1);
+                        //adapter.notifyItemInserted(foodList.size() - 1);
                     }
 
 
@@ -274,7 +274,8 @@ public class shopping_list extends Fragment {
                                 Log.i("Nutrition", nutrition);
                                 myRef = database.getReference("pantry_items");
                                 Pantry_Item pant = new Pantry_Item(foodname, nutrition, max, total);
-                                myRef.push().setValue(pant);
+                                myRef.child(foodname).setValue(pant);
+                                //myRef.push().setValue(pant);
                                 Toast.makeText(getContext(), "Shopping list updated!", Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
                                 Log.i("SHOPPINGLISTADD:", "failed to load card");
