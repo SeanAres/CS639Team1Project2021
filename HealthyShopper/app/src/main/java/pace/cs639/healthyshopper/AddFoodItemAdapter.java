@@ -1,5 +1,6 @@
 package pace.cs639.healthyshopper;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
         String qty = String.valueOf(foodList.get(position).getQty());
         holder.qtyView.setText("x"+qty);
         String cal = foodList.get(position).getCal();
-        holder.calView.setText(cal);
+        holder.calView.setText("total cal: "+ cal);
         //OnClickListener implemented here in order to delete appropriate card when its delete button is pressed.
         holder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,11 +66,9 @@ public class AddFoodItemAdapter extends RecyclerView.Adapter<AddFoodItemAdapter.
                 myRef = database.getReference().child(email);
                 int qty = foodList.get(holder.getPosition()).getQty();
                String name = foodList.get(holder.getPosition()).getName();
-               myRef.child(name).child("total").setValue(String.valueOf(qty));
-
-
-
-
+               int max = foodList.get(holder.getPosition()).getMax();
+               Log.i("Max Val: ", String.valueOf(max));
+               myRef.child(name).child("total").setValue(String.valueOf(max));
             }
         });
     }
