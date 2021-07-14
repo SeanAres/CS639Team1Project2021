@@ -7,22 +7,25 @@ public class SL_FoodItem {
 
         private String Name;
         private int Qty;
+        private int Max;
 
         private String Cal = "0";
 
     SL_FoodItem(){
 
     }
-    SL_FoodItem(String name, int qty, String cal){
+    SL_FoodItem(String name, int qty, int max, String cal){
             this.Name = name;
             this.Qty = qty;
             this.Cal = cal;
+            this.Max = max;
         }
 
     protected SL_FoodItem(Parcel in) {
         Name = in.readString();
         Qty = in.readInt();
         Cal = in.readString();
+        Max = in.readInt();
     }
 
         public String getName() {
@@ -36,6 +39,8 @@ public class SL_FoodItem {
 
         public String getCal() {return Cal;}
 
+        public int getMax() {return Max;}
+
         public void setName(String Name) {
             this.Name = Name;
         }
@@ -47,6 +52,8 @@ public class SL_FoodItem {
         public void setCal(String cal) {
         this.Cal = cal;
     }
+
+        public void setMax(int max) { this.Max = max; }
 
 
 }

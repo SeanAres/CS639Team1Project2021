@@ -141,6 +141,7 @@ public class shopping_list extends Fragment {
                     food.setCal(total_calories);
                     food.setName(food_name);
                     food.setQty(qty);
+                    food.setMax(Integer.parseInt(max_item));
                     if(Integer.parseInt(max_item)!=Integer.parseInt(total_item)) {
                         foodList.add(food);
                         //adapter.notifyItemInserted(foodList.size() - 1);
@@ -160,19 +161,6 @@ public class shopping_list extends Fragment {
             }
         });
         //Database code ends
-
-        //TODO: Add an OnClickListener() to the add to pantry button.
-        // This should update the corresponding item in the pantry with the quantity that was in the shopping list.
-        //addPntryBtn.setOnClickListener(new View.OnClickListener() {
-
-        //    @Override
-        //    public void onClick(View v) {
-
-        //    }
-        //});
-
-        //TODO: Add Button updates the database with a new item, which contains 0/qty items(check for duplicates)
-        // This should automatically update the shopping list with the quantity you'd like.
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
